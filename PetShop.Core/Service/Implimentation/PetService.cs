@@ -1,6 +1,8 @@
 ﻿using PetShop.Core.Domain;
+using PetShop.Core.Entity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PetShop.Core.Service.Implimentation
@@ -12,6 +14,89 @@ namespace PetShop.Core.Service.Implimentation
         public PetService(IPetRepository petRepository)
         {
             _petRepository = petRepository;
+        }
+
+        public void CreatePet(string name, string type, string colour, string previousOwner, double price, DateTime birthdate)
+        {
+
+            Pet pet = new Pet()
+            {
+                Name = name,
+                Type = type,
+                PreviousOwner = previousOwner,
+                Colour = colour,
+                Birthdate = birthdate,
+                Price = price,
+                SellDate = DateTime.Now
+            };
+            SavePet(pet);
+        }
+
+        public void DeletePet(int id)
+        {
+            Pet deletePet = GetPetById(id);
+            _petRepository.DeletePet(deletePet);
+        }
+
+        public List<Pet> GetAllPets()
+        {
+            return _petRepository.ReadPets().ToList();
+        }
+
+        public List<Pet> GetCheapest()
+        {
+            var list = _petRepository.ReadPets();
+            var query = list.OrderBy(pet => pet.Price);
+            return query.Take(5).ToList();
+        }
+
+        public Pet GetPetById(int id)
+        {
+            foreach (var pet in _petRepository.ReadPets().ToList())
+            {
+                if(pet.Id == id)
+                {
+                    return pet;
+                }
+            }
+            return null;
+        }
+
+        public List<Pet> GetPetsByPrice()
+        {
+            var list = _petRepository.ReadPets();
+            var query = list.OrderBy(pet => pet.Price);
+            return query.ToList();
+        }
+
+        public List<Pet> GetPetsByType(string type)
+        {
+            var list = _petRepository.ReadPets();
+            var query = list.Where(pet => pet.Type.ToLower() == type.ToLower());
+            if(query.ToList().Count > 0)
+            {
+                return query.ToList();
+            }
+            return null;
+        }
+
+        public void SavePet(Pet pet)
+        {
+            _petRepository.AddPet(pet);
+        }
+
+        public void UpdatePet(int id, string name, string type, string colour, string previousOwner, double price, DateTime birthdate)
+        {
+            var updatePet = new Pet();
+            updatePet.Id = id;
+            updatePet.Name = name;
+            updatePet.Type = type;
+            updatePet.Colour = colour;
+            updatePet.PreviousOwner = previousOwner;
+            updatePet.Price = price;
+            updatePet.Birthdate = birthdate;
+
+            _petRepository.UpdatePet(updatePet);
         }
     }
 }

@@ -1,17 +1,18 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using PetShop.Console;
 using PetShop.Core.Domain;
 using PetShop.Core.Service;
 using PetShop.Core.Service.Implimentation;
+using PetShop.Infrastructure.Static.Data;
 using PetShop.Infrastructure.Static.Data.Repositories;
 using System;
 
-namespace PetShop
+namespace PetShop.ConsoleApp
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
+            FakeDb.InitDate();
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddScoped<IPetRepository, PetRepository>();
             serviceCollection.AddScoped<IPrinter, Printer>();
@@ -19,8 +20,11 @@ namespace PetShop
             serviceCollection.BuildServiceProvider();
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
-            var printer = serviceProvider.GetRequiredService<IPrinter>();
-            printer.StartUI();
+            var petService = serviceProvider.GetRequiredService<IPetService>();
+
+            new Printer(petService);
+
+
         }
     }
 }

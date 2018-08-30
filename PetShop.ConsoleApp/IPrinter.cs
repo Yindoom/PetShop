@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PetShop.Console
+namespace PetShop.ConsoleApp
 {
-    interface IPrinter
+    public interface IPrinter
     {
         void StartUI();
     }
