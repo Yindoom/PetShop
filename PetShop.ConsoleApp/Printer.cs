@@ -8,8 +8,7 @@ namespace PetShop.ConsoleApp
 {
     public class Printer : IPrinter
     {
-
-        IPetService _petService;
+        readonly IPetService _petService;
         public Printer(IPetService petService)
         {
             _petService = petService;

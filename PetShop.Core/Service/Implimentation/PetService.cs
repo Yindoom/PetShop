@@ -80,7 +80,7 @@ namespace PetShop.Core.Service.Implimentation
             return null;
         }
 
-        public void SavePet(Pet pet)
+        void SavePet(Pet pet)
         {
             _petRepository.AddPet(pet);
         }
