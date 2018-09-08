@@ -154,7 +154,7 @@ namespace PetShop.ConsoleApp
                     {
                         Console.WriteLine("This is not a valid date. Try again using the format of dd/MM/yyyy");
                     }
-                    _petService.UpdatePet(id, Name, Type, Colour, PreviousOwner, Price, Birthdate);
+                    _petService.UpdatePet(id, Name, Type, Colour, id, Price, Birthdate);
                     Console.Clear();
                     Console.WriteLine($"{Name} has been updated.\n ");
                     ShowMenu();

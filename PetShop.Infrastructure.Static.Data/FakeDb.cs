@@ -8,15 +8,35 @@ namespace PetShop.Infrastructure.Static.Data
     public class FakeDb
     {
         public static IEnumerable<Pet> Pets;
+        public static IEnumerable<Owner> Owners;
         public static void InitDate()
         {
+            Owners = new List<Owner>()
+            {
+                new Owner()
+                {
+                    Birthdate = DateTime.Parse("27/07/1995"),
+                    Id = 0,
+                    Email = "yindoom@hotmail.com",
+                    FirstName = "Bastian",
+                    LastName = "Bønkel"
+                },
+                new Owner()
+                {
+                    Id = 1,
+                    FirstName = "Fabio",
+                    LastName = "Moniz",
+                    Email = "fabiomoniz@portugal.dk",
+                    Birthdate = DateTime.Parse("07/07/1997")
+                }
+            };
             Pet pet1 = new Pet()
             {
                 Id = 0,
                 Name = "Boy",
                 Birthdate = DateTime.Parse("1/1/1998"),
                 Colour = "Red",
-                PreviousOwner = "Mary Poppins",
+                PreviousOwner = new Owner() {Id = 0},
                 Price = 5000,
                 SellDate = DateTime.Parse("24/12/2018"),
                 Type = "Cat"
@@ -27,7 +47,7 @@ namespace PetShop.Infrastructure.Static.Data
                 Name = "Piggy",
                 Birthdate = DateTime.Parse("6/9/1778"),
                 Colour = "Pink",
-                PreviousOwner = "Ebenezer Screwge",
+                PreviousOwner = new Owner() { Id = 1},
                 Price = 5,
                 SellDate = DateTime.Parse("8/1/1995"),
                 Type = "Pig"
@@ -38,7 +58,7 @@ namespace PetShop.Infrastructure.Static.Data
                 Name = "Boris",
                 Type = "Camel",
                 Colour = "Brown",
-                PreviousOwner = "Lucy Lue",
+                PreviousOwner = new Owner() {Id = 0},
                 Birthdate = DateTime.Parse("19/6/2005"),
                 Price = 500,
                 SellDate = DateTime.Parse("20/6/2005")
@@ -49,7 +69,7 @@ namespace PetShop.Infrastructure.Static.Data
                 Name = "Willow",
                 Type = "Popcorn",
                 Colour = "White",
-                PreviousOwner = "Me",
+                PreviousOwner = new Owner() {Id = 0},
                 Birthdate = DateTime.Parse("30/08/2018"),
                 Price = 20_000,
                 SellDate = DateTime.Parse("31/08/2018")
@@ -60,7 +80,7 @@ namespace PetShop.Infrastructure.Static.Data
                 Name = "Dingo",
                 Type = "Dingo",
                 Colour = "Grey",
-                PreviousOwner = "Johnny",
+                PreviousOwner = new Owner(){Id = 1},
                 Birthdate = DateTime.Parse("19/12/2005"),
                 Price = 200,
                 SellDate = DateTime.Parse("20/7/2012")
@@ -71,7 +91,7 @@ namespace PetShop.Infrastructure.Static.Data
                 Name = "Marin",
                 Type = "Human",
                 Colour = "White-ish",
-                PreviousOwner = "Tomek",
+                PreviousOwner = new Owner(){Id = 1},
                 Birthdate = DateTime.Parse("19/6/2005"),
                 Price = 0,
                 SellDate = DateTime.Parse("20/6/2005")

@@ -7,7 +7,8 @@ namespace PetShop.Core.Service
 {
     public interface IPetService
     {
-        void CreatePet(string name, string type, string colour, string previousOwner, double price, DateTime birthdate);
+        void CreatePet(string name, string type, string colour, int previousOwnerId, double price, DateTime birthdate);
+        void CreatePet(Pet pet);
 
         List<Pet> GetAllPets();
         Pet GetPetById(int id);
@@ -16,6 +17,6 @@ namespace PetShop.Core.Service
         void DeletePet(int id);
         List<Pet> GetPetsByPrice();
         List<Pet> GetCheapest();
-        void UpdatePet(int id, string name, string type, string colour, string previousOwner, double price, DateTime birthdate);
+        void UpdatePet(int id, string name, string type, string colour, int previousOwnerId, double price, DateTime birthdate);
     }
 }

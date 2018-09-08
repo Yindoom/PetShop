@@ -16,14 +16,18 @@ namespace PetShop.Core.Service.Implimentation
             _petRepository = petRepository;
         }
 
-        public void CreatePet(string name, string type, string colour, string previousOwner, double price, DateTime birthdate)
+        public void CreatePet(Pet pet)
+        {
+            SavePet(pet);
+        }
+        public void CreatePet(string name, string type, string colour, int previousOwnerId, double price, DateTime birthdate)
         {
 
             Pet pet = new Pet()
             {
                 Name = name,
                 Type = type,
-                PreviousOwner = previousOwner,
+                PreviousOwner = new Owner(){Id = previousOwnerId},
                 Colour = colour,
                 Birthdate = birthdate,
                 Price = price,
@@ -85,14 +89,14 @@ namespace PetShop.Core.Service.Implimentation
             _petRepository.AddPet(pet);
         }
 
-        public void UpdatePet(int id, string name, string type, string colour, string previousOwner, double price, DateTime birthdate)
+        public void UpdatePet(int id, string name, string type, string colour, int previousOwnerId, double price, DateTime birthdate)
         {
             var updatePet = new Pet();
             updatePet.Id = id;
             updatePet.Name = name;
             updatePet.Type = type;
             updatePet.Colour = colour;
-            updatePet.PreviousOwner = previousOwner;
+            updatePet.PreviousOwner = new Owner() {Id = previousOwnerId};
             updatePet.Price = price;
             updatePet.Birthdate = birthdate;
 
