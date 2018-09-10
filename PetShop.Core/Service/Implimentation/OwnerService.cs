@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,19 +20,35 @@ namespace PetShop.Core.Service.Implimentation
             return _ownerRepository.ReadOwners().ToList();
         }
 
+        public Owner GetOwnerById(int id)
+        {
+            var list = GetAllOwners().ToList();
+            foreach (var owner in list)
+            {
+                if (owner.Id == id)
+                {
+                    return owner;
+                }
+            }
+
+            return null;
+        }
+
         public void CreateOwner(Owner owner)
         {
-            throw new System.NotImplementedException();
+            _ownerRepository.AddOwner(owner);
         }
 
-        public void UpdateOwner(Owner owner)
+        public void UpdateOwner(Owner owner, int id)
         {
-            throw new System.NotImplementedException();
+            _ownerRepository.UpdateOwner(owner);
         }
 
-        public void DeleteOwner(Owner owner)
+        public void DeleteOwner(int id)
         {
-            throw new System.NotImplementedException();
+            var deleteOwner = GetOwnerById(id);
+            _ownerRepository.DeleteOwner(deleteOwner);
         }
+
     }
 }

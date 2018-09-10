@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
+using System.Linq;
 using PetShop.Core.Domain;
 using PetShop.Core.Entity;
 
@@ -8,7 +10,11 @@ namespace PetShop.Infrastructure.Static.Data.Repositories
     {
         public void AddOwner(Owner owner)
         {
-            throw new System.NotImplementedException();
+            var owners = FakeDb.Owners;
+            owner.Id = owners.ElementAt(owners.Count() - 1).Id+1;
+            var list = owners.ToList();
+            list.Add(owner);
+            FakeDb.Owners = list;
         }
 
         public IEnumerable<Owner> ReadOwners()
@@ -16,14 +22,25 @@ namespace PetShop.Infrastructure.Static.Data.Repositories
             return FakeDb.Owners;
         }
 
-        public void UpdatePet(Owner owner)
+        public void UpdateOwner(Owner owner)
         {
-            throw new System.NotImplementedException();
+            var list = FakeDb.Owners.ToArray();
+            for (int i = 0; i < list.Length; i++)
+            {
+                if (list[i].Id == owner.Id)
+                {
+                    list[i] = owner;
+                }
+            }
+
+            FakeDb.Owners = list;
         }
 
-        public void DeletePet(Owner deleteOwner)
+        public void DeleteOwner(Owner deleteOwner)
         {
-            throw new System.NotImplementedException();
+            var list = FakeDb.Owners.ToList();
+            list.Remove(deleteOwner);
+            FakeDb.Owners = list;
         }
     }
 }

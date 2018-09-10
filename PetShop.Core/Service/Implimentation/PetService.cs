@@ -102,5 +102,11 @@ namespace PetShop.Core.Service.Implimentation
 
             _petRepository.UpdatePet(updatePet);
         }
+
+         
+        public void UpdatePet(Pet pet)
+        {
+            _petRepository.UpdatePet(pet);
+        }
     }
 }
