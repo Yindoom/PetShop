@@ -54,7 +54,7 @@ namespace LazyShit.PetShop
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
