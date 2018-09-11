@@ -10,10 +10,12 @@ namespace PetShop.Core.Service.Implimentation
     public class PetService : IPetService
     {
         readonly IPetRepository _petRepository;
+        readonly IOwnerService _ownerService;
 
-        public PetService(IPetRepository petRepository)
+        public PetService(IPetRepository petRepository, IOwnerService ownerService)
         {
             _petRepository = petRepository;
+            _ownerService = ownerService;
         }
 
         public void CreatePet(Pet pet)
@@ -66,6 +68,7 @@ namespace PetShop.Core.Service.Implimentation
             {
                 if(pet.Id == id)
                 {
+                    pet.PreviousOwner = _ownerService.GetOwnerById(pet.PreviousOwner.Id);
                     return pet;
                 }
             }
