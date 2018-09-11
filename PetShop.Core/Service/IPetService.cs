@@ -17,6 +17,6 @@ namespace PetShop.Core.Service
         void DeletePet(int id);
         List<Pet> GetPetsByPrice();
         List<Pet> GetCheapest();
-        void UpdatePet(int id, string name, string type, string colour, int previousOwnerId, double price, DateTime birthdate);
+        void UpdatePet(int id, Pet name);
     }
 }

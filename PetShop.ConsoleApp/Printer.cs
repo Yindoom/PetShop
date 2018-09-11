@@ -191,7 +191,7 @@ namespace PetShop.ConsoleApp
             {
                 Console.WriteLine("This is not a valid date. Try again using the format of dd/MM/yyyy");
             }
-            _petService.CreatePet(Name, Type, Colour, PreviousOwner, Price, Birthdate);
+            //_petService.CreatePet(Name, Type, Colour, PreviousOwner, Price, Birthdate);
             Console.Clear();
             Console.WriteLine($"{Name} has been added");
             ShowMenu();

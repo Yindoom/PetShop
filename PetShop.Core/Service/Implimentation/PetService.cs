@@ -54,6 +54,12 @@ namespace PetShop.Core.Service.Implimentation
             return query.Take(5).ToList();
         }
 
+        public void UpdatePet(int id, Pet pet)
+        {
+            pet.Id = id;
+            _petRepository.UpdatePet(pet);
+        }
+
         public Pet GetPetById(int id)
         {
             foreach (var pet in _petRepository.ReadPets().ToList())
@@ -88,25 +94,6 @@ namespace PetShop.Core.Service.Implimentation
         {
             _petRepository.AddPet(pet);
         }
-
-        public void UpdatePet(int id, string name, string type, string colour, int previousOwnerId, double price, DateTime birthdate)
-        {
-            var updatePet = new Pet();
-            updatePet.Id = id;
-            updatePet.Name = name;
-            updatePet.Type = type;
-            updatePet.Colour = colour;
-            updatePet.PreviousOwner = new Owner() {Id = previousOwnerId};
-            updatePet.Price = price;
-            updatePet.Birthdate = birthdate;
-
-            _petRepository.UpdatePet(updatePet);
-        }
-
-         
-        public void UpdatePet(Pet pet)
-        {
-            _petRepository.UpdatePet(pet);
-        }
+        
     }
 }
