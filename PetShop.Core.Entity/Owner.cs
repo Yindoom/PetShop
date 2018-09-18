@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace PetShop.Core.Entity
 {
@@ -9,5 +10,6 @@ namespace PetShop.Core.Entity
         public string LastName { get; set; }
         public string Email { get; set; }
         public DateTime Birthdate { get; set; }
+        public List<Pet> Pets { get; set; }
     }
 }

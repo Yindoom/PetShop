@@ -10,10 +10,12 @@ namespace PetShop.Core.Service.Implimentation
     public class OwnerService : IOwnerService
     {
         private readonly IOwnerRepository _ownerRepository;
+        readonly IPetRepository _petRepository;
 
-        public OwnerService(IOwnerRepository ownerRepository)
+        public OwnerService(IOwnerRepository ownerRepository, IPetRepository petRepository)
         {
             _ownerRepository = ownerRepository;
+            _petRepository = petRepository;
         }
         public List<Owner> GetAllOwners()
         {
@@ -27,6 +29,14 @@ namespace PetShop.Core.Service.Implimentation
             {
                 if (owner.Id == id)
                 {
+                    owner.Pets = new List<Pet>();
+                    foreach (var pet in _petRepository.ReadPets())
+                    {
+                        if (pet.PreviousOwner.Id == owner.Id)
+                        {
+                            owner.Pets.Add(pet);
+                        }
+                    }
                     return owner;
                 }
             }

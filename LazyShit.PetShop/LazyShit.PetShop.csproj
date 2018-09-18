@@ -10,15 +10,18 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.App" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer">
+          <Version>2.2.0-preview1-35029</Version>
+        </PackageReference>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection">
           <Version>2.2.0-preview1-35029</Version>
         </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Infrastructure\PetShop.Infrastructure.Data\PetShop.Infrastructure.Data.csproj" />
       <ProjectReference Include="..\PetShop.Core.Entity\PetShop.Core.Entity.csproj" />
       <ProjectReference Include="..\PetShop.Core\PetShop.Core.csproj" />
-      <ProjectReference Include="..\PetShop.Infrastructure.Static.Data\PetShop.Infrastructure.Static.Data.csproj" />
     </ItemGroup>
 
 </Project>

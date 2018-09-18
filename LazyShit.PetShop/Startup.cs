@@ -6,15 +6,19 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using PetShop.Core.Domain;
 using PetShop.Core.Service;
 using PetShop.Core.Service.Implimentation;
-using PetShop.Infrastructure.Static.Data;
-using PetShop.Infrastructure.Static.Data.Repositories;
+using PetShop.Infrastructure.Data;
+using PetShop.Infrastructure.Data.SQLRepositories;
 
 namespace LazyShit.PetShop
 {
@@ -23,7 +27,6 @@ namespace LazyShit.PetShop
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            FakeDb.InitDate();
 
         }
 
@@ -33,11 +36,21 @@ namespace LazyShit.PetShop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                options.SerializerSettings.ReferenceLoopHandling =
+                    ReferenceLoopHandling.Ignore;
+            });
+
+            services.AddDbContext<PetShopContext>(
+                opt => opt.UseInMemoryDatabase("DBOne"));
             services.AddScoped<IPetRepository, PetRepository>();
             services.AddScoped<IPetService, PetService>();
 
             services.AddScoped<IOwnerRepository, OwnerRepository>();
-            services.AddScoped<IOwnerService, OwnerService>();
+            services.AddScoped<IOwnerService, OwnerService>(); 
             
             services.BuildServiceProvider();
         }

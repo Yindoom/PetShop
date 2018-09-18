@@ -64,15 +64,7 @@ namespace PetShop.Core.Service.Implimentation
 
         public Pet GetPetById(int id)
         {
-            foreach (var pet in _petRepository.ReadPets().ToList())
-            {
-                if(pet.Id == id)
-                {
-                    pet.PreviousOwner = _ownerService.GetOwnerById(pet.PreviousOwner.Id);
-                    return pet;
-                }
-            }
-            return null;
+            return _petRepository.ReadPets().FirstOrDefault(p => p.Id == id);
         }
 
         public List<Pet> GetPetsByPrice()
@@ -85,7 +77,7 @@ namespace PetShop.Core.Service.Implimentation
         public List<Pet> GetPetsByType(string type)
         {
             var list = _petRepository.ReadPets();
-            var query = list.Where(pet => pet.Type.ToLower() == type.ToLower());
+            var query = list.Where(pet => pet.Type.ToLower().Equals(type.ToLower()));
             if(query.ToList().Count > 0)
             {
                 return query.ToList();
