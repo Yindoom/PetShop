@@ -15,6 +15,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PetShop.Core.Domain;
+using PetShop.Core.Entity;
 using PetShop.Core.Service;
 using PetShop.Core.Service.Implimentation;
 using PetShop.Infrastructure.Data;
@@ -45,10 +46,10 @@ namespace LazyShit.PetShop
             });
 
             services.AddDbContext<PetShopContext>(
-                opt => opt.UseInMemoryDatabase("DBOne"));
+                opt => opt.UseSqlite("Data Source=PetShopDb"));
             services.AddScoped<IPetRepository, PetRepository>();
             services.AddScoped<IPetService, PetService>();
-
+ 
             services.AddScoped<IOwnerRepository, OwnerRepository>();
             services.AddScoped<IOwnerService, OwnerService>(); 
             
@@ -61,6 +62,7 @@ namespace LazyShit.PetShop
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
             }
             else
             {

@@ -28,21 +28,21 @@ namespace LazyShit.PetShop.Controllers
             [HttpGet("{id}")]
             public ActionResult<Owner> Get(int id)
             {
-                return _ownerService.GetOwnerById(id);
+                return _ownerService.ReadById(id);
             }
 
             // POST api/values
             [HttpPost]
-            public void Post([FromBody] Owner owner)
+            public Owner Post([FromBody] Owner owner)
             {
-                _ownerService.CreateOwner(owner);
+                return _ownerService.CreateOwner(owner);
             }
 
             // PUT api/values/5
             [HttpPut("{id}")]
-            public void Put(int id, [FromBody] Owner owner)
+            public Owner Put(int id, [FromBody] Owner owner)
             {
-                _ownerService.UpdateOwner(owner, id);
+                return _ownerService.UpdateOwner(owner, id);
             }
 
             // DELETE api/values/5

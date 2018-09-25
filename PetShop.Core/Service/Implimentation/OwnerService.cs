@@ -22,42 +22,26 @@ namespace PetShop.Core.Service.Implimentation
             return _ownerRepository.ReadOwners().ToList();
         }
 
-        public Owner GetOwnerById(int id)
+        public Owner ReadById(int id)
         {
-            var list = GetAllOwners().ToList();
-            foreach (var owner in list)
-            {
-                if (owner.Id == id)
-                {
-                    owner.Pets = new List<Pet>();
-                    foreach (var pet in _petRepository.ReadPets())
-                    {
-                        if (pet.PreviousOwner.Id == owner.Id)
-                        {
-                            owner.Pets.Add(pet);
-                        }
-                    }
-                    return owner;
-                }
-            }
-
-            return null;
+            return _ownerRepository.ReadById(id);
         }
 
-        public void CreateOwner(Owner owner)
+        public Owner CreateOwner(Owner owner)
         {
-            _ownerRepository.AddOwner(owner);
+            return _ownerRepository.AddOwner(owner);
         }
 
-        public void UpdateOwner(Owner owner, int id)
+        public Owner UpdateOwner(Owner owner, int id)
         {
-            _ownerRepository.UpdateOwner(owner);
+            owner.Id = id;
+            return _ownerRepository.UpdateOwner(owner);
         }
 
-        public void DeleteOwner(int id)
+        public Owner DeleteOwner(int id)
         {
-            var deleteOwner = GetOwnerById(id);
-            _ownerRepository.DeleteOwner(deleteOwner);
+            var deleteOwner = _ownerRepository.ReadById(id);
+            return _ownerRepository.DeleteOwner(deleteOwner);
         }
 
     }

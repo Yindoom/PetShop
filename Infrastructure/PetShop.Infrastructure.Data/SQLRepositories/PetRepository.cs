@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Microsoft.EntityFrameworkCore;
 using PetShop.Core.Domain;
 using PetShop.Core.Entity;
 using PetShop.Infrastructure.Data;
@@ -17,32 +18,39 @@ namespace PetShop.Infrastructure.Data.SQLRepositories
         }
         public Pet AddPet(Pet pet)
         {
-            _ctx.Pets.Add(pet);
+            var added = _ctx.Pets.Add(pet).Entity;
             _ctx.SaveChanges();
-            return pet;
+            return added;
         }
 
-        public IEnumerable<Pet> ReadPets()
+        public IEnumerable<Pet> ReadPets(Filter filter)
         {
-            return _ctx.Pets;
+            if (filter == null)
+            {
+                return _ctx.Pets.Include(p => p.PreviousOwner);
+            }
+
+                return _ctx.Pets.Skip(filter.CurrentPage - 1 * filter.ItemsPrPage)
+                    .Take(filter.ItemsPrPage);
         }
 
         public Pet ReadById(int id)
         {
-            return _ctx.Pets.FirstOrDefault(p => p.Id == id);
+            return _ctx.Pets.Include(p => p.PreviousOwner).FirstOrDefault(p => p.Id == id);
         }
 
         public Pet UpdatePet(Pet pet)
         {
-            _ctx.Pets.Update(pet);
+            var updated = _ctx.Pets.Update(pet).Entity;
             _ctx.SaveChanges();
-            return pet;
+            return updated;
         }
 
         public Pet DeletePet(Pet deletePet)
         {
-            _ctx.Remove(deletePet);
-            return deletePet;
+            var removed = _ctx.Remove(deletePet).Entity;
+            _ctx.SaveChanges();
+            return removed;
         }
     }
 }

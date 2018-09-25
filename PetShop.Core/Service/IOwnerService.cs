@@ -6,9 +6,9 @@ namespace PetShop.Core.Service
     public interface IOwnerService
     {
         List<Owner> GetAllOwners();
-        Owner GetOwnerById(int id);
-        void CreateOwner(Owner owner);
-        void UpdateOwner(Owner owner, int id);
-        void DeleteOwner(int id);
+        Owner CreateOwner(Owner owner);
+        Owner ReadById(int id);
+        Owner UpdateOwner(Owner owner, int id);
+        Owner DeleteOwner(int id);
     }
 }

@@ -9,6 +9,8 @@ namespace PetShop.Core.Domain
 
         IEnumerable<Owner> ReadOwners();
 
+        Owner ReadById(int id);
+
         Owner UpdateOwner(Owner owner);
 
         Owner DeleteOwner(Owner deleteOwner);

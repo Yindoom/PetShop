@@ -9,7 +9,9 @@ namespace PetShop.Core.Domain
     {
         Pet AddPet(Pet pet);
 
-        IEnumerable<Pet> ReadPets();
+        IEnumerable<Pet> ReadPets(Filter filter = null);
+
+        Pet ReadById(int id);
 
         Pet UpdatePet(Pet pet);
 

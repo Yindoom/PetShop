@@ -17,9 +17,9 @@ namespace PetShop.Infrastructure.Data.SQLRepositories
 
         public Owner AddOwner(Owner owner)
         {
-            _ctx.Owners.Add(owner);
+            var added = _ctx.Owners.Add(owner).Entity;
             _ctx.SaveChanges();
-            return owner;
+            return added;
         }
 
         public IEnumerable<Owner> ReadOwners()
@@ -33,16 +33,17 @@ namespace PetShop.Infrastructure.Data.SQLRepositories
         }
 
         public Owner UpdateOwner(Owner owner)
-        {
-            _ctx.Owners.Update(owner);
+        {  
+            var updated = _ctx.Owners.Update(owner).Entity;
             _ctx.SaveChanges();
-            return owner;
+            return updated;
         }
 
         public Owner DeleteOwner(Owner owner)
         {
-            _ctx.Remove(owner);
-            return owner;
+            var removed = _ctx.Remove(owner).Entity;
+            _ctx.SaveChanges();
+            return removed;
         }
     }
 }

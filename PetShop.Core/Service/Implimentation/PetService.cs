@@ -2,6 +2,7 @@
 using PetShop.Core.Entity;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -18,35 +19,34 @@ namespace PetShop.Core.Service.Implimentation
             _ownerService = ownerService;
         }
 
-        public void CreatePet(Pet pet)
+        public Pet CreatePet(Pet pet)
         {
-            SavePet(pet);
-        }
-        public void CreatePet(string name, string type, string colour, int previousOwnerId, double price, DateTime birthdate)
-        {
-
-            Pet pet = new Pet()
+            if (pet.PreviousOwner == null)
             {
-                Name = name,
-                Type = type,
-                PreviousOwner = new Owner(){Id = previousOwnerId},
-                Colour = colour,
-                Birthdate = birthdate,
-                Price = price,
-                SellDate = DateTime.Now
-            };
-            SavePet(pet);
+                throw new InvalidDataException("FUCK");
+            }
+
+            if (_ownerService.ReadById(pet.PreviousOwner.Id) == null)
+            {
+                throw new InvalidDataException("Owner does not exist");
+            }
+            return SavePet(pet);
         }
 
-        public void DeletePet(int id)
+        public Pet DeletePet(int id)
         {
-            Pet deletePet = GetPetById(id);
-            _petRepository.DeletePet(deletePet);
+            var deletePet = _petRepository.ReadById(id);
+            return _petRepository.DeletePet(deletePet);
         }
 
         public List<Pet> GetAllPets()
         {
             return _petRepository.ReadPets().ToList();
+        }
+
+        public List<Pet> GetFilteredPets(Filter filter)
+        {
+            return _petRepository.ReadPets(filter).ToList();
         }
 
         public List<Pet> GetCheapest()
@@ -56,15 +56,17 @@ namespace PetShop.Core.Service.Implimentation
             return query.Take(5).ToList();
         }
 
-        public void UpdatePet(int id, Pet pet)
+        public Pet UpdatePet(int id, Pet pet)
         {
             pet.Id = id;
-            _petRepository.UpdatePet(pet);
+            return _petRepository.UpdatePet(pet);
         }
 
         public Pet GetPetById(int id)
         {
-            return _petRepository.ReadPets().FirstOrDefault(p => p.Id == id);
+            var pet = _petRepository.ReadPets().FirstOrDefault(p => p.Id == id);
+            //pet.PreviousOwner = _ownerService.ReadById(pet.PreviousOwner.Id);
+            return pet;
         }
 
         public List<Pet> GetPetsByPrice()
@@ -85,9 +87,9 @@ namespace PetShop.Core.Service.Implimentation
             return null;
         }
 
-        void SavePet(Pet pet)
+        Pet SavePet(Pet pet)
         {
-            _petRepository.AddPet(pet);
+            return _petRepository.AddPet(pet);
         }
         
     }
