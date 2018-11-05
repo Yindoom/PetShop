@@ -38,20 +38,26 @@ namespace LazyShit.PetShop
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddCors(options => options.AddPolicy("AllowAnyOrigin", 
+                builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+            
             services.AddMvc().AddJsonOptions(options =>
             {
-                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                options.SerializerSettings.ContractResolver = 
+                    new CamelCasePropertyNamesContractResolver();
                 options.SerializerSettings.ReferenceLoopHandling =
                     ReferenceLoopHandling.Ignore;
             });
 
             services.AddDbContext<PetShopContext>(
                 opt => opt.UseSqlite("Data Source=PetShopDb"));
+            
             services.AddScoped<IPetRepository, PetRepository>();
             services.AddScoped<IPetService, PetService>();
  
             services.AddScoped<IOwnerRepository, OwnerRepository>();
-            services.AddScoped<IOwnerService, OwnerService>(); 
+            services.AddScoped<IOwnerService, OwnerService>();
+            services.AddScoped<IUserRepository, UserRepository>();
             
             services.BuildServiceProvider();
         }
@@ -68,8 +74,8 @@ namespace LazyShit.PetShop
             {
                 app.UseHsts();
             }
-
-            //app.UseHttpsRedirection();
+            app.UseCors("AllowAnyOrigin");
+            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

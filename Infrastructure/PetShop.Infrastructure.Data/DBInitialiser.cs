@@ -24,7 +24,7 @@ namespace PetShop.Infrastructure.Data
                     Birthdate = DateTime.Now,
                     Email = "yindoom@hotmail.com",
                     FirstName = "Naitsab",
-                    LastName = "Bønkel"
+                    LastName = "Bønkel",
                 }).Entity;
 
                 ctx.Pets.Add(new Pet()
