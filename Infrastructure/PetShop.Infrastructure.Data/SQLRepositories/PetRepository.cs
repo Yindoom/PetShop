@@ -25,7 +25,7 @@ namespace PetShop.Infrastructure.Data.SQLRepositories
 
         public IEnumerable<Pet> ReadPets(Filter filter)
         {
-            if (filter.CurrentPage<1 || filter.ItemsPrPage<1)
+            if (filter == null || filter.CurrentPage<1 || filter.ItemsPrPage<1)
             {
                 return _ctx.Pets.Include(p => p.PreviousOwner);
             }
