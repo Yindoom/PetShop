@@ -6,6 +6,6 @@ namespace PetShop.Core.Domain
     public interface IUserRepository
     {
         IEnumerable<User> GetAllUsers();
-        User GetByUsername(string user);
+        User GetByUsername(LoginInput login);
     }
 }

@@ -18,9 +18,9 @@ namespace PetShop.Infrastructure.Data.SQLRepositories
             return _ctx.Users;
         }
 
-        public User GetByUsername(string user)
+        public User GetByUsername(LoginInput login)
         {
-            return _ctx.Users.FirstOrDefault(u => u.Username == user);
+            return _ctx.Users.FirstOrDefault(u => u.Username == login.Username);
         }
     }
 }

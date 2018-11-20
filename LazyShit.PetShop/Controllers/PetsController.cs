@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic.CompilerServices;
 using PetShop.Core.Entity;
@@ -25,10 +26,10 @@ namespace LazyShit.PetShop.Controllers
         public ActionResult<List<Pet>> Get([FromQuery] Filter filter)
         {
             return Ok(_petService.GetFilteredPets(filter));
-            return _petService.GetAllPets();
         }
 
         // GET api/values/5
+        [Authorize]
         [HttpGet("{id}")]
         public ActionResult<Pet> Get(int id)
         {
@@ -36,6 +37,7 @@ namespace LazyShit.PetShop.Controllers
         }
 
         // POST api/values
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public ActionResult<Pet> Post([FromBody] Pet pet)
         {
@@ -51,6 +53,7 @@ namespace LazyShit.PetShop.Controllers
         }
 
         // PUT api/values/5
+        [Authorize(Roles = "Administrator")]
         [HttpPut("{id}")]
         public Pet Put(int id, [FromBody] Pet pet)
         {
@@ -58,6 +61,7 @@ namespace LazyShit.PetShop.Controllers
         }
 
         // DELETE api/values/5
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
         public Pet Delete(int id)
         {

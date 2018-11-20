@@ -23,7 +23,7 @@ namespace PetShop.Core.Service.Implimentation
         {
             if (pet.PreviousOwner == null)
             {
-                throw new InvalidDataException("FUCK");
+                throw new InvalidDataException("No Owner");
             }
 
             if (_ownerService.ReadById(pet.PreviousOwner.Id) == null)

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PetShop.Core.Domain;
 using PetShop.Core.Entity;
 
@@ -29,7 +30,7 @@ namespace PetShop.Infrastructure.Data.SQLRepositories
 
         public Owner ReadById(int id)
         {
-            return _ctx.Owners.FirstOrDefault(o => o.Id == id);
+            return _ctx.Owners.Include(o => o.Pets).FirstOrDefault(o => o.Id == id);
         }
 
         public Owner UpdateOwner(Owner owner)

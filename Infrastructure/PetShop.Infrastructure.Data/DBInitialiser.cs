@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using PetShop.Core.Entity;
 
@@ -9,6 +10,33 @@ namespace PetShop.Infrastructure.Data
         public static void SeedDB(PetShopContext ctx)
         {
             ctx.Database.EnsureCreated();
+            if (!ctx.Users.Any())
+            {
+                string password = "1234";
+                byte[] passwordHashJoe, passwordSaltJoe, passwordHashAnn, passwordSaltAnn;
+                CreatePasswordHash(password, out passwordHashJoe, out passwordSaltJoe);
+                CreatePasswordHash(password, out passwordHashAnn, out passwordSaltAnn);
+                List<User> users = new List<User>
+                {
+                    new User
+                    {
+                        Username = "UserJoe",
+                        PasswordHash = passwordHashJoe,
+                        PasswordSalt = passwordSaltJoe,
+                        IsAdmin = false
+                    },
+                    new User
+                    {
+                        Username = "AdminAnn",
+                        PasswordHash = passwordHashAnn,
+                        PasswordSalt = passwordSaltAnn,
+                        IsAdmin = true
+                    }
+                };
+                ctx.Users.AddRange(users);
+            }
+
+            
             if (!ctx.Pets.Any() && !ctx.Owners.Any())
             {
                 var own = ctx.Owners.Add(new Owner()
@@ -58,6 +86,15 @@ namespace PetShop.Infrastructure.Data
                     SellDate = DateTime.Now
                 });
                 ctx.SaveChanges();
+            }
+        }
+
+        private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
             }
         }
     }
