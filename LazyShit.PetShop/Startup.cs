@@ -41,7 +41,7 @@ namespace LazyShit.PetShop
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddCors(options => options.AddPolicy("AllowAnyOrigin", 
-                builder => builder.WithOrigins("https://lazy-petshop.firebaseapp.com").AllowAnyMethod().AllowAnyHeader()));
+                builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
             
             services.AddMvc().AddJsonOptions(options =>
             {
